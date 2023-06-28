@@ -41,3 +41,53 @@ export const products: TProducts[] = [
       "https://plus.unsplash.com/premium_photo-1664194584355-25196f114804?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
   },
 ];
+
+export function createUser(
+  id: string,
+  name: string,
+  email: string,
+  password: string
+): void {
+  const newUser: TUsers = {
+    id,
+    name,
+    email,
+    password,
+    createdAt: newDate.toISOString(),
+  };
+  users.push(newUser);
+  console.log("Cadastro realizado com sucesso", newUser);
+}
+
+export function getAllUsers(): TUsers[] {
+  return users;
+}
+
+export function createProducts(
+  id: string,
+  name: string,
+  price: number,
+  description: string,
+  imageUrl: string
+): void {
+  const newProducts: TProducts = {
+    id,
+    name,
+    price,
+    description,
+    imageUrl,
+  };
+  products.push(newProducts);
+  console.log("Cadastro realizado com sucesso", newProducts);
+}
+
+export function getAllProducts(): TProducts[] {
+  return products;
+}
+
+export function searchProductsByName(name: string) {
+  const nameFiltered = products.filter((product) => {
+    return product.name.toLowerCase() === name.toLowerCase();
+  });
+  return nameFiltered;
+}
