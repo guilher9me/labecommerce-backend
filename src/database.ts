@@ -47,7 +47,7 @@ export function createUser(
   name: string,
   email: string,
   password: string
-): void {
+): string {
   const newUser: TUsers = {
     id,
     name,
@@ -56,7 +56,7 @@ export function createUser(
     createdAt: newDate.toISOString(),
   };
   users.push(newUser);
-  console.log("Cadastro realizado com sucesso", newUser);
+  return "Cadastro realizado com sucesso";
 }
 
 export function getAllUsers(): TUsers[] {
@@ -69,7 +69,7 @@ export function createProducts(
   price: number,
   description: string,
   imageUrl: string
-): void {
+): string {
   const newProducts: TProducts = {
     id,
     name,
@@ -78,7 +78,7 @@ export function createProducts(
     imageUrl,
   };
   products.push(newProducts);
-  console.log("Cadastro realizado com sucesso", newProducts);
+  return "Cadastro realizado com sucesso";
 }
 
 export function getAllProducts(): TProducts[] {
