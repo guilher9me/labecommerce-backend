@@ -77,3 +77,44 @@ app.post("/products", (req: Request, res: Response) => {
   const result: string = createProducts(id, name, price, description, imageUrl);
   res.status(201).send(result);
 });
+
+app.delete("/users/:id", (req: Request, res: Response) => {
+  const idToDelete = req.params.id;
+  const userIndex = users.findIndex((user) => user.id === idToDelete);
+  if (userIndex >= 0) {
+    users.splice(userIndex, 1);
+  }
+  res.status(200).send("User apagado com sucesso");
+});
+
+app.delete("/products/:id", (req: Request, res: Response) => {
+  const idToDelete = req.params.id;
+  const productsIndex = products.findIndex(
+    (product) => product.id === idToDelete
+  );
+  if (productsIndex >= 0) {
+    products.splice(productsIndex, 1);
+  }
+  res.status(200).send("Produto apagado com sucesso");
+});
+
+app.put("/products/:id", (req: Request, res: Response) => {
+  const idToEdit = req.params.id;
+
+  const newId = req.body.id as string;
+  const newName = req.body.name as string;
+  const newPrice = req.body.price as number;
+  const newDescription = req.body.description as string;
+  const newImageUrl = req.body.imageUrl as string;
+
+  const product = products.find((product) => product.id === idToEdit);
+
+  if (product) {
+    product.id = newId || product.id;
+    product.name = newName || product.name;
+    product.price = isNaN(newPrice) ? product.price : newPrice;
+    product.description = newDescription || product.description;
+    product.imageUrl = newImageUrl || product.imageUrl;
+  }
+  res.status(200).send("Produto atualizado com sucesso");
+});
