@@ -100,25 +100,23 @@ app.post("/users", (req: Request, res: Response) => {
     const email = req.body.email as string;
     const password = req.body.password as string;
 
-    const result: string = createUser(id, name, email, password);
-
     const idIsUsed = users.find((user) => {
       return user.id === id;
     });
-
+    const emailIsUsed = users.find((user) => {
+      return user.email === email;
+    });
     if (idIsUsed) {
       res.status(400);
       throw new Error("Id já cadastrado!");
     }
 
-    const emailIsUsed = users.find((user) => {
-      return user.email === email;
-    });
-
     if (emailIsUsed) {
       res.status(400);
       throw new Error("Email já cadastrado!");
     }
+
+    const result: string = createUser(id, name, email, password);
 
     if (typeof id !== "string") {
       throw new Error("'id' deve ser uma string");
