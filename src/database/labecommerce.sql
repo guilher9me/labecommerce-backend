@@ -30,4 +30,29 @@ VALUES
 ('prod4', 'Musgo verde', 300, 'Herbácea perene', 'https://i.pinimg.com/564x/a3/b2/d8/a3b2d88ea3b79ccfd019d45711a8d815.jpg'),
 ('prod5', 'Rosa', 15, 'Rosa', 'https://i.pinimg.com/564x/24/c2/09/24c20950a57f01f51ca66f0c12aca32a.jpg');
 
+
+-- RETORNA TODAS AS PESSOAS CADASTRADAS
+SELECT * FROM users;
+-- RETORNA TODOS OS PRODUTOS CADASTRADOS
+SELECT * FROM products;
+-- RETORNA SOMENTE OS PRODUTOS QUE POSSUEM EM SEU NOME O TERMO "INHA" NO MEIO DA PALAVRA
 SELECT * FROM products
+WHERE name LIKE '%inha%';
+-- CRIA UMA NOVA PESSOA NA TABELA USERS
+INSERT INTO users (id, name, email, password, created_at)
+VALUES
+('user4', 'Gui', 'gui@emo.com', 'paramore3', DATE('now'));
+-- CRIA UM NOVO PRODUTO NA TABELA PRODUCTS
+INSERT INTO products (id, name, price, description, image_url)
+VALUES
+('prod6', 'Coisa aleatória', 111, 'Alguma coisa aleatória', 'https://i.pinimg.com/564x/95/21/b1/9521b155169b9f53c294f1e38c86d87a.jpg');
+-- DELETA UM USER POR ID
+DELETE FROM users
+WHERE id = 'user1';
+-- DELETA UM PRODUTO POR ID
+DELETE FROM products
+WHERE id = 'prod1';
+-- EDITA UM PRODUTO POR ID
+UPDATE products
+SET name = 'Tsc tsc'
+WHERE id = 'prod6';
