@@ -56,3 +56,21 @@ WHERE id = 'prod1';
 UPDATE products
 SET name = 'Tsc tsc'
 WHERE id = 'prod6';
+
+-- CRIAÇÃO DA TABELA DE PEDIDOS
+CREATE TABLE purchases (
+  id TEXT PRIMARY KEY UNIQUE NOT NULL,
+  buyer TEXT NOT NULL,
+  total_price REAL NOT NULL,
+  created_at TEXT NOT NULL,
+  FOREIGN KEY (buyer) REFERENCES users(id)
+);
+
+-- CRIAÇÃO DE PRODUTOS PRA TABELA PURCHASE
+INSERT INTO purchases (id, buyer, total_price, created_at)
+VALUES ('purchase01', 'user2', 150, DATE('now')),
+('purchase02', 'user3', 231, DATE('now'));
+
+SELECT * FROM purchases
+INNER JOIN users
+ON purchases.buyer = users.id;
