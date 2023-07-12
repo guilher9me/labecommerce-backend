@@ -71,6 +71,7 @@ INSERT INTO purchases (id, buyer, total_price, created_at)
 VALUES ('purchase01', 'user2', 150, DATE('now')),
 ('purchase02', 'user3', 231, DATE('now'));
 
+-- CRIAÇÃO DA QUERY DE CONSULTA UTILIZANDO JUNÇÃO DE SELECT COM JOIN
 SELECT * FROM purchases
 INNER JOIN users
 ON purchases.buyer = users.id;
