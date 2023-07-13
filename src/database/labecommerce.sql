@@ -75,3 +75,29 @@ VALUES ('purchase01', 'user2', 150, DATE('now')),
 SELECT * FROM purchases
 INNER JOIN users
 ON purchases.buyer = users.id;
+
+-- CRIAÇÃO DA TABELA DE RELAÇÕES
+CREATE TABLE purchases_products (
+  purchases_id TEXT NOT NULL,
+  products_id TEXT NOT NULL,
+  quantity INTEGER NOT NULL,
+  FOREIGN KEY (purchases_id) REFERENCES purchases (id),
+   ON UPDATE CASCADE
+			ON DELETE CASCADE,
+  FOREIGN KEY (products_id) REFERENCES products (id)
+   ON UPDATE CASCADE
+			ON DELETE CASCADE,
+);
+
+-- INSERINDO DADOS NA TABELA
+INSERT INTO purchases_products (purchases_id, products_id, quantity)
+VALUES
+('purchase01', 'prod2', 5),
+('purchase02', 'prod4', 3),
+('purchase01', 'prod3', 6);
+
+SELECT * FROM purchases_products
+INNER JOIN purchases
+ON purchases_products.purchases_id = purchases.id
+INNER JOIN products
+ON purchases_products.products_id = products.id;
