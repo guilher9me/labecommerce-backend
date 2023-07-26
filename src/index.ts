@@ -12,6 +12,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import { TProducts, TUsers } from "./types";
 import { error } from "console";
+import { db } from "./database/knex";
 const app = express();
 
 createUser("user03", "Zac Farro", "zacfarro@emo.com", "paramore");
@@ -38,23 +39,28 @@ app.get("/ping", (req: Request, res: Response) => {
 });
 
 // Get All Users
-app.get("/users", (req: Request, res: Response) => {
+app.get("/users", async (req: Request, res: Response) => {
   try {
-    res.status(200).send(users);
+    const result = await db.raw(`
+      SELECT * FROM users;`);
+    res.status(200).send(result);
   } catch (error: any) {
     console.log(error);
-
     if (res.statusCode === 200) {
       res.status(500);
     }
-    res.send(error.message);
+    throw new Error("Erro ao buscar usuários");
   }
 });
 
 // Get All Products
-app.get("/products", (req: Request, res: Response) => {
+app.get("/products", async (req: Request, res: Response) => {
   try {
     const name = req.query.name as string;
+    if (name && name.length > 2) {
+      const result = await.db.select('*').from('products').where(`name`, `like`, `%${name}%`)
+      res.status(200).send(result)
+    }
 
     if (name == undefined) {
       res.status(200).send(products);
@@ -64,9 +70,7 @@ app.get("/products", (req: Request, res: Response) => {
       res.status(400);
       throw new Error("Name precisa conter pelo menos um caractere");
     }
-    const result = products.filter((product) =>
-      product.name.toLowerCase().includes(name.toLowerCase())
-    );
+    const result = await db.raw(`SELECT * FROM products WHERE name=${name}`)
     res.status(200).send(result);
   } catch (error: any) {
     console.log(error);
@@ -93,12 +97,15 @@ app.get("/product", (req: Request, res: Response) => {
 
 // Create User
 
-app.post("/users", (req: Request, res: Response) => {
+app.post("/users", async (req: Request, res: Response) => {
   try {
     const id = req.body.id as string;
     const name = req.body.name as string;
     const email = req.body.email as string;
     const password = req.body.password as string;
+
+    const result = await db.raw(`
+    SELECT * FROM users;`)
 
     const idIsUsed = users.find((user) => {
       return user.id === id;
